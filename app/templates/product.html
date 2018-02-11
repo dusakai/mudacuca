@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <section class="main-section">
+                <ol class="breadcrumb">
+                  <li><a href="#"><h2>Produto</h2></a></li>
+                  <li><a href="#">Novo Produto</a></li>
+                 <!--<li class="active">Nova venda</li>-->
+                </ol>
+        </section>
+
+<!-- inicio adicionar produto -->
+
+    <section class="main-section paddingtop20" id="section_add_product">
+  		<div class="row">
+        <form class="form-horizontal" action='' method="POST">
+          {{ product_form.csrf }}
+          <fieldset>
+            {{ product_form.hidden_tag() }}
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="name">
+                {{ product_form.name.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.name }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="url_image">
+                {{ product_form.url_image.label}}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.url_image }}
+                <small id="fileHelp" class="form-text text-muted paddingtop5">Insira uma imagem do arquivo</small>
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="category">
+                {{ product_form.category.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.category }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="description">
+                {{ product_form.description.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.description }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="quantity">
+                {{ product_form.quantity.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.quantity }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="purchase_price">
+                {{ product_form.purchase_price.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.purchase_price }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="sale_price">
+                {{ product_form.sale_price.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.sale_price }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="minimum_in_stock">
+                {{ product_form.minimum_in_stock.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.minimum_in_stock }}
+              </div>
+            </div>
+
+            <div class="col-md-12 form-group margin50">
+              <div class="col-md-2"  for="stock">
+                {{ product_form.stock.label }}
+              </div>
+              <div class="col-md-6">
+                {{ product_form.stock }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group margin50">
+              <label class="col-md-3"  for="submite"></label>
+              <div class="col-md-6">
+                <div class="row paddingtop">
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+              </div>
+            </div>
+
+        </fieldset>
+      </form>
+
+    </section>
+<!-- fim adicionar produto -->
+
+{% endblock %}

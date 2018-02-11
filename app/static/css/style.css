@@ -1,0 +1,250 @@
+@import('https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.0/css/bootstrap.min.css');
+
+.bs-glyphicons {
+  margin: 0 -10px 20px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 5px;
+}
+.bs-glyphicons-list {
+  padding-left: 0;
+  list-style: none;
+}
+.bs-glyphicons .glyphicon {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+.bs-glyphicons .glyphicon-class {
+  display: block;
+  text-align: center;
+  word-wrap: break-word; /* Help out IE10+ with class names */
+}
+.bs-glyphicons:hover {
+  color: #fff;
+  background-color: #563d7c;
+  border-radius: 5px;
+
+}
+
+
+.bs-glyphicons_excluir {
+  padding: 10px 5px;
+/*  margin: 0 -10px 10px;*/
+  overflow: hidden;
+  text-align: center;
+  border-radius: 5px;
+
+}
+.bs-glyphicons_excluir:hover {
+  color: #fff;
+  background-color: #d9534f;
+  border-radius: 5px;
+
+}
+
+
+
+/* container do produto */
+
+.product_container {
+  margin; auto;
+  float: right;
+
+}
+.height100 {
+  height: 100%;
+}
+
+
+/*padding para a minitabela do carrinho */
+
+.minitable-container {
+  background-color: #c3d7ff;
+  border-radius: 5px;
+}
+
+.minitable {
+  padding: 7px;
+}
+.minitable:hover {
+  color: #fff;
+  background-color: #21809c;
+  border-radius: 5px;
+}
+.paddingtop50 {
+  padding-top:50px;
+}
+.paddingtop30 {
+  padding-top:30px;
+}
+.paddingtop25 {
+  padding-top:25px;
+}
+.paddingtop20 {
+  padding-top:20px;
+}
+.paddingtop15 {
+  padding-top:15px;
+}
+.paddingtop10 {
+  padding-top:10px;
+}
+.paddingtop5 {
+  padding-top:5px;
+}
+
+.paddingleft10 {
+  padding-left: 10px;
+}
+.paddingleft15 {
+  padding-left: 15px;
+}
+.marginleft-15 {
+  margin-left: -15px;
+}
+.marginright-15 {
+  margin-right: -15px;
+}
+.paddingright15 {
+  padding-right: 15px;
+}
+
+
+.paddingbottom-3 {
+  padding-bottom: -3px;
+}
+
+
+.button_transparent {
+  background-color: transparent;
+  border: 0px;
+  box-shadow: 0px;
+  text-shadow: 0px;
+}
+.button_transparent:hover{
+  cursor:pointer;
+}
+.button_transparent:focus{
+  outline:none;
+}
+
+.funkyradio div {
+  clear: both;
+  overflow: hidden;
+}
+
+.funkyradio label {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #D1D3D4;
+  font-weight: normal;
+}
+
+.funkyradio input[type="radio"]:empty,
+.funkyradio input[type="checkbox"]:empty {
+  display: none;
+}
+
+.funkyradio input[type="radio"]:empty ~ label,
+.funkyradio input[type="checkbox"]:empty ~ label {
+  position: relative;
+  line-height: 2.5em;
+  text-indent: 3.25em;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.funkyradio input[type="radio"]:empty ~ label:before,
+.funkyradio input[type="checkbox"]:empty ~ label:before {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 2.5em;
+  background: #D1D3D4;
+  border-radius: 3px 0 0 3px;
+}
+
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label,
+.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
+  color: #888;
+}
+
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
+.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
+  content: '\2714';
+  text-indent: .9em;
+  color: #C2C2C2;
+}
+
+.funkyradio input[type="radio"]:checked ~ label,
+.funkyradio input[type="checkbox"]:checked ~ label {
+  color: #777;
+}
+
+.funkyradio input[type="radio"]:checked ~ label:before,
+.funkyradio input[type="checkbox"]:checked ~ label:before {
+  content: '\2714';
+  text-indent: .9em;
+  color: #333;
+  background-color: #ccc;
+}
+
+.funkyradio input[type="radio"]:focus ~ label:before,
+.funkyradio input[type="checkbox"]:focus ~ label:before {
+  box-shadow: 0 0 0 3px #999;
+}
+
+.funkyradio-default input[type="radio"]:checked ~ label:before,
+.funkyradio-default input[type="checkbox"]:checked ~ label:before {
+  color: #333;
+  background-color: #ccc;
+}
+
+.funkyradio-primary input[type="radio"]:checked ~ label:before,
+.funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #337ab7;
+}
+
+.funkyradio-success input[type="radio"]:checked ~ label:before,
+.funkyradio-success input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #5cb85c;
+}
+
+.funkyradio-danger input[type="radio"]:checked ~ label:before,
+.funkyradio-danger input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #d9534f;
+}
+
+.funkyradio-warning input[type="radio"]:checked ~ label:before,
+.funkyradio-warning input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #f0ad4e;
+}
+
+.funkyradio-info input[type="radio"]:checked ~ label:before,
+.funkyradio-info input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #5bc0de;
+}
+
+
+/*style of product add forms*/
+.margin50
+{
+    margin-top:50px
+}
+.dimentions-width, .dimentions-height
+{
+    width:100%;
+    display:initial;
+}
