@@ -43,7 +43,7 @@ def product ():
 
     def populateProductTable():
         name = product_form.name.data
-        image_name = product_form.url_image.data
+        image_name = product_form.image_name.data
         description = product_form.description.data
         quantity = product_form.quantity.data
         purchase_price = product_form.purchase_price.data
@@ -51,29 +51,32 @@ def product ():
         minimum_in_stock = product_form.minimum_in_stock.data
         category = product_form.category.data
         stock = product_form.stock.data
+        url_image = BASE_DIR+IMAGE_DIR+image_name
 
-        # submit = request.form.get('submit')
+        #Product data add
+        product_data = Product(name, description, quantity, purchase_price, sale_price, \
+                            minimum_in_stock, url_image, category, stock)
+        db.session.add(product_data)
+        db.session.commit()
+        db.session.close()
 
-        print ('product name: \n {}'.format(name))
-        print ('product description: \n {}'.format(description))
-        print ('product quantity: \n {}'.format(quantity))
-        print ('product purchase_price: \n {}'.format(purchase_price))
-        print ('product sale_price: \n {}'.format(sale_price))
-        print ('product minimum_in_stock: \n {}'.format(minimum_in_stock))
-        print ('product url_image: \n {}'.format(image_name))
-        print ('product category: \n {}'.format(category))
-        print ('product stock: \n {}'.format(stock))
-        # print ('product submit: \n {}'.format(request.form.get('submit')))
-        # check if the post request has the file part
 
     product_form = ProductAdd(request.form)
     if request.method == 'POST' and product_form.validate():
         if request.form.get("name") != None:
             populateProductTable()
+            return redirect(url_for('product'))
     else:
         print (product_form.validate())
 
-    return render_template('product.html', product_form=product_form)
+    product_items = db.session.query(Product.name, Product.category, \
+                    Product.description, Product.quantity, \
+                    Product.purchase_price, Product.sale_price, \
+                    Product.stock, Product.minimum_in_stock).\
+                    all()
+
+    return render_template('product.html', product_form=product_form, \
+                    product_items=product_items)
 
 
 @app.route ('/vendas', methods=['GET', 'POST'])

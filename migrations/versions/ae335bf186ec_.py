@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: c4ffe1e4dfff
+Revision ID: ae335bf186ec
 Revises: 
-Create Date: 2018-02-11 16:04:34.354449
+Create Date: 2018-02-11 23:44:30.323158
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c4ffe1e4dfff'
+revision = 'ae335bf186ec'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,68 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('color', sa.String(), nullable=True),
     sa.Column('category_node_id', sa.Integer(), nullable=True),
+    sa.Column('node', sa.Boolean(), nullable=False),
+    sa.Column('leaf', sa.Boolean(), nullable=False),
+    sa.Column('slug', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('payments',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('payment_type', sa.String(length=100), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('payment_type')
+    )
+    op.create_table('people',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=True),
+    sa.Column('email', sa.String(), nullable=True),
+    sa.Column('cpf', sa.String(), nullable=True),
+    sa.Column('phone', sa.String(), nullable=True),
+    sa.Column('address', sa.String(), nullable=True),
+    sa.Column('people_join_date', sa.DateTime(), nullable=True),
+    sa.Column('slug', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('cpf'),
+    sa.UniqueConstraint('email')
+    )
+    op.create_table('products',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=True),
+    sa.Column('description', sa.String(), nullable=True),
+    sa.Column('quantity', sa.Integer(), nullable=True),
+    sa.Column('purchase_price', sa.Float(), nullable=True),
+    sa.Column('sale_price', sa.Float(), nullable=True),
+    sa.Column('minimum_in_stock', sa.Integer(), nullable=True),
+    sa.Column('url_image', sa.String(), nullable=True),
+    sa.Column('activate', sa.Boolean(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=False),
+    sa.Column('slug', sa.String(), nullable=True),
+    sa.Column('category', sa.String(), nullable=True),
+    sa.Column('stock', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('purchases',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('total_price', sa.Float(), nullable=False),
+    sa.Column('purchase_description', sa.String(length=500), nullable=True),
+    sa.Column('on_site', sa.Boolean(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('sales',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('total_price', sa.Float(), nullable=False),
+    sa.Column('sale_description', sa.String(length=500), nullable=True),
+    sa.Column('on_site', sa.Boolean(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('stock',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=True),
+    sa.Column('color', sa.String(), nullable=True),
+    sa.Column('Stock_node_id', sa.Integer(), nullable=True),
     sa.Column('node', sa.Boolean(), nullable=False),
     sa.Column('leaf', sa.Boolean(), nullable=False),
     sa.Column('slug', sa.String(), nullable=True),
@@ -44,46 +106,6 @@ def upgrade():
     sa.ForeignKeyConstraint(['sale_id'], ['sales.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('payments',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('payment_type', sa.String(length=100), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('payment_type')
-    )
-    op.create_table('people',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(), nullable=True),
-    sa.Column('email', sa.String(), nullable=True),
-    sa.Column('cpf', sa.String(), nullable=True),
-    sa.Column('phone', sa.String(), nullable=True),
-    sa.Column('address', sa.String(), nullable=True),
-    sa.Column('people_join_date', sa.DateTime(), nullable=True),
-    sa.Column('slug', sa.String(), nullable=True),
-    sa.Column('category_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['category_id'], ['category.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('cpf'),
-    sa.UniqueConstraint('email')
-    )
-    op.create_table('products',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(), nullable=True),
-    sa.Column('description', sa.String(), nullable=True),
-    sa.Column('quantity', sa.Integer(), nullable=True),
-    sa.Column('purchase_price', sa.Float(), nullable=True),
-    sa.Column('sale_price', sa.Float(), nullable=True),
-    sa.Column('minimum_in_stock', sa.Integer(), nullable=True),
-    sa.Column('url_image', sa.String(), nullable=True),
-    sa.Column('activate', sa.Boolean(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), nullable=False),
-    sa.Column('slug', sa.String(), nullable=True),
-    sa.Column('category_id', sa.Integer(), nullable=False),
-    sa.Column('stock_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['category_id'], ['category.id'], ),
-    sa.ForeignKeyConstraint(['stock_id'], ['stock.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('purchase_items',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('purchase_id', sa.Integer(), nullable=True),
@@ -93,22 +115,6 @@ def upgrade():
     sa.Column('order_time_stamp', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], ),
     sa.ForeignKeyConstraint(['purchase_id'], ['purchases.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('purchases',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('total_price', sa.Float(), nullable=False),
-    sa.Column('purchase_description', sa.String(length=500), nullable=True),
-    sa.Column('on_site', sa.Boolean(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('purchase_items_id', sa.Integer(), nullable=False),
-    sa.Column('customer_id', sa.Integer(), nullable=False),
-    sa.Column('seller_id', sa.Integer(), nullable=False),
-    sa.Column('payment_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], ),
-    sa.ForeignKeyConstraint(['payment_id'], ['payments.id'], ),
-    sa.ForeignKeyConstraint(['purchase_items_id'], ['purchase_items.id'], ),
-    sa.ForeignKeyConstraint(['seller_id'], ['sellers.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('sale_items',
@@ -122,36 +128,10 @@ def upgrade():
     sa.ForeignKeyConstraint(['sale_id'], ['sales.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('sales',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('total_price', sa.Float(), nullable=False),
-    sa.Column('sale_description', sa.String(length=500), nullable=True),
-    sa.Column('on_site', sa.Boolean(), nullable=True),
-    sa.Column('created_at', sa.DateTime(), nullable=False),
-    sa.Column('sale_items_id', sa.Integer(), nullable=False),
-    sa.Column('customer_id', sa.Integer(), nullable=False),
-    sa.Column('seller_id', sa.Integer(), nullable=False),
-    sa.Column('payment_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], ),
-    sa.ForeignKeyConstraint(['payment_id'], ['payments.id'], ),
-    sa.ForeignKeyConstraint(['sale_items_id'], ['sale_items.id'], ),
-    sa.ForeignKeyConstraint(['seller_id'], ['sellers.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
     op.create_table('sellers',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('people_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['people_id'], ['people.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('stock',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('name', sa.String(), nullable=True),
-    sa.Column('color', sa.String(), nullable=True),
-    sa.Column('Stock_node_id', sa.Integer(), nullable=True),
-    sa.Column('node', sa.Boolean(), nullable=False),
-    sa.Column('leaf', sa.Boolean(), nullable=False),
-    sa.Column('slug', sa.String(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -172,16 +152,16 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('users')
-    op.drop_table('stock')
     op.drop_table('sellers')
-    op.drop_table('sales')
     op.drop_table('sale_items')
-    op.drop_table('purchases')
     op.drop_table('purchase_items')
+    op.drop_table('payment_items')
+    op.drop_table('customers')
+    op.drop_table('stock')
+    op.drop_table('sales')
+    op.drop_table('purchases')
     op.drop_table('products')
     op.drop_table('people')
     op.drop_table('payments')
-    op.drop_table('payment_items')
-    op.drop_table('customers')
     op.drop_table('category')
     # ### end Alembic commands ###

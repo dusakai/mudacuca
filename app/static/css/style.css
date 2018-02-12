@@ -22,7 +22,7 @@
 }
 .bs-glyphicons:hover {
   color: #fff;
-  background-color: #563d7c;
+  background-color: #337ab7;
   border-radius: 5px;
 
 }
@@ -237,12 +237,12 @@
   background-color: #5bc0de;
 }
 
-
 /*style of product add forms*/
 .margin50
 {
     margin-top:50px
 }
+
 .dimentions-width, .dimentions-height
 {
     width:100%;

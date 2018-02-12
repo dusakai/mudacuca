@@ -22,7 +22,7 @@ class ProductAdd (FlaskForm):
     purchase_price = FloatField ('Preço de compra')
     sale_price = FloatField ('Preço de venda', validators=[DataRequired()])
     minimum_in_stock = IntegerField('Minimo em estoque')
-    url_image = FileField('Imagem')
+    image_name = FileField('Imagem')
     category = StringField('Categoria')
     stock = StringField('Estoque', validators=[DataRequired()])
     submit = SubmitField('Inserir')

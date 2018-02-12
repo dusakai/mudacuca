@@ -103,13 +103,13 @@ class People (db.Model):
     address = Column(String, nullable=True)
     people_join_date= Column(DateTime, default=func.now())
     slug = db.Column(db.String())
-    # Associations
-    category_id = Column(Integer,
-                        ForeignKey("category.id"), nullable=False)
-    category = relationship("Category", foreign_keys=[category_id],
-                               backref=backref(
-                                   "people",
-                                   cascade="all, delete-orphan"))
+    # # Associations
+    # category_id = Column(Integer,
+    #                     ForeignKey("category.id"), nullable=False)
+    # category = relationship("Category", foreign_keys=[category_id],
+    #                            backref=backref(
+    #                                "people",
+    #                                cascade="all, delete-orphan"))
 
 
     def __init__(self, name, email, cpf, category):
@@ -170,27 +170,34 @@ class Product (db.Model):
     created_at = Column(DateTime, nullable=False, default=func.now())
     updated_at = Column(DateTime, nullable=False, default=func.now())
     slug = db.Column(db.String())
-    # Associations
-    category_id = Column(Integer,
-                        ForeignKey("category.id"), nullable=False)
-    category = relationship("Category", foreign_keys=[category_id],
-                               backref=backref(
-                                   "product",
-                                   cascade="all, delete-orphan"))
+
+    # provisorio
+    category = db.Column(db.String())
+    stock = db.Column(db.String())
 
     # Associations
-    stock_id = Column(Integer,
-                        ForeignKey("stock.id"), nullable=False)
-    stock = relationship("Stock", foreign_keys=[stock_id],
-                               backref=backref(
-                                   "product",
-                                   cascade="all, delete-orphan"))
+    # category_id = Column(Integer,
+    #                     ForeignKey("category.id"), nullable=False)
+    # category = relationship("Category", foreign_keys=[category_id],
+    #                            backref=backref(
+    #                                "product",
+    #                                cascade="all, delete-orphan"))
+
+    # Associations
+    # stock_id = Column(Integer,
+    #                     ForeignKey("stock.id"), nullable=False)
+    # stock = relationship("Stock", foreign_keys=[stock_id],
+    #                            backref=backref(
+    #                                "product",
+    #                                cascade="all, delete-orphan"))
 
 
 
     def __init__(self, name, description, quantity, purchase_price, sale_price, \
                         minimum_in_stock, url_image, category, stock):
+
         self.name = name
+        self.description = description
         self.quantity = quantity
         self.purchase_price = purchase_price
         self.sale_price = sale_price
@@ -198,6 +205,9 @@ class Product (db.Model):
         self.url_image = url_image
         self.category = category
         self.stock = stock
+        # self.category_id = 0
+        # self.stock_id = 0
+
 
     def __unicode__(self):
         return self.name
@@ -211,7 +221,7 @@ class Payment(db.Model):
     id = Column(Integer, primary_key=True)
     payment_type = Column(String(100), unique=True)
     # relationship
-    payment_bills = relationship('Bill', back_populates='payment')
+    # payment_bills = relationship('Payment', back_populates='payment')
 
 class PaymentItems(db.Model):
     __tablename__ = 'payment_items'
@@ -223,8 +233,8 @@ class PaymentItems(db.Model):
     payment_time_stamp = Column(DateTime, default=func.now())
 
     # relationships
-    sale = relationship('Sale', back_populates='items')
-    payment = relationship('Payment', back_populates='paymnets')
+    # sale = relationship('Sale', back_populates='items')
+    # payment = relationship('Payment', back_populates='paymnets')
 
 class Sale (db.Model):
     """ Sale's table """
@@ -236,39 +246,39 @@ class Sale (db.Model):
     on_site = Column(Boolean, default=True)
     created_at = Column(DateTime, nullable=False, default=func.now())
 
-    # Associations
-    # sale_items
-    sale_items_id = Column(Integer,
-                        ForeignKey("sale_items.id"), nullable=False)
-    sale_items = relationship("SaleItems", foreign_keys=[sale_items_id],
-                               backref=backref(
-                                   "sale",
-                                   cascade="all, delete-orphan"))
-    # customer
-    customer_id = Column(Integer,
-                        ForeignKey("customers.id"), nullable=False)
-
-    customer = relationship("Customer", foreign_keys=[customer_id],
-                               backref=backref(
-                                   "sale",
-                                   cascade="all, delete-orphan"))
-    # seller
-    seller_id = Column(Integer,
-                        ForeignKey("sellers.id"), nullable=False)
-
-    seller = relationship("Seller", foreign_keys=[seller_id],
-                               backref=backref(
-                                   "sale",
-                                   cascade="all, delete-orphan"))
-
-    # payment
-    payment_id = Column(Integer,
-                        ForeignKey("payments.id"), nullable=False)
-
-    payment = relationship("Payment", foreign_keys=[payment_id],
-                               backref=backref(
-                                   "sale",
-                                   cascade="all, delete-orphan"))
+    # # Associations
+    # # sale_items
+    # sale_items_id = Column(Integer,
+    #                     ForeignKey("sale_items.id"), nullable=False)
+    # sale_items = relationship("SaleItems", foreign_keys=[sale_items_id],
+    #                            backref=backref(
+    #                                "sale",
+    #                                cascade="all, delete-orphan"))
+    # # customer
+    # customer_id = Column(Integer,
+    #                     ForeignKey("customers.id"), nullable=False)
+    #
+    # customer = relationship("Customer", foreign_keys=[customer_id],
+    #                            backref=backref(
+    #                                "sale",
+    #                                cascade="all, delete-orphan"))
+    # # seller
+    # seller_id = Column(Integer,
+    #                     ForeignKey("sellers.id"), nullable=False)
+    #
+    # seller = relationship("Seller", foreign_keys=[seller_id],
+    #                            backref=backref(
+    #                                "sale",
+    #                                cascade="all, delete-orphan"))
+    #
+    # # payment
+    # payment_id = Column(Integer,
+    #                     ForeignKey("payments.id"), nullable=False)
+    #
+    # payment = relationship("Payment", foreign_keys=[payment_id],
+    #                            backref=backref(
+    #                                "sale",
+    #                                cascade="all, delete-orphan"))
 
 
     def __unicode__(self):
@@ -287,9 +297,9 @@ class SaleItems(db.Model):
     order_price = Column(Float, nullable=False)
     order_time_stamp = Column(DateTime, default=func.now())
 
-    # relationships
-    sale = relationship('Sale', back_populates='items')
-    product = relationship('Product', back_populates='sales')
+    # # relationships
+    # sale = relationship('Sale', back_populates='sale_items')
+    # # product = relationship('Product', back_populates='sale_items')
 
 class Purchase (db.Model):
     """ Purchase's table """
@@ -301,40 +311,40 @@ class Purchase (db.Model):
     on_site = Column(Boolean, default=True)
     created_at = Column(DateTime, nullable=False, default=func.now())
 
-    # Associations
-    # purchase_items
-    purchase_items_id = Column(Integer,
-                        ForeignKey("purchase_items.id"), nullable=False)
-    purchase_items = relationship("PurchaseItems", foreign_keys=[purchase_items_id],
-                               backref=backref(
-                                   "purchase",
-                                   cascade="all, delete-orphan"))
-    # customer
-    customer_id = Column(Integer,
-                        ForeignKey("customers.id"), nullable=False)
-
-    customer = relationship("Customer", foreign_keys=[customer_id],
-                               backref=backref(
-                                   "purchase",
-                                   cascade="all, delete-orphan"))
-    # seller
-    seller_id = Column(Integer,
-                        ForeignKey("sellers.id"), nullable=False)
-
-    seller = relationship("Seller", foreign_keys=[seller_id],
-                               backref=backref(
-                                   "purchase",
-                                   cascade="all, delete-orphan"))
-
-    # payment
-    payment_id = Column(Integer,
-                        ForeignKey("payments.id"), nullable=False)
-
-    payment = relationship("Payment", foreign_keys=[payment_id],
-                               backref=backref(
-                                   "purchase",
-                                   cascade="all, delete-orphan"))
-
+    # # Associations
+    # # purchase_items
+    # purchase_items_id = Column(Integer,
+    #                     ForeignKey("purchase_items.id"), nullable=False)
+    # purchase_items = relationship("PurchaseItems", foreign_keys=[purchase_items_id],
+    #                            backref=backref(
+    #                                "purchase",
+    #                                cascade="all, delete-orphan"))
+    # # customer
+    # customer_id = Column(Integer,
+    #                     ForeignKey("customers.id"), nullable=False)
+    #
+    # customer = relationship("Customer", foreign_keys=[customer_id],
+    #                            backref=backref(
+    #                                "purchase",
+    #                                cascade="all, delete-orphan"))
+    # # seller
+    # seller_id = Column(Integer,
+    #                     ForeignKey("sellers.id"), nullable=False)
+    #
+    # seller = relationship("Seller", foreign_keys=[seller_id],
+    #                            backref=backref(
+    #                                "purchase",
+    #                                cascade="all, delete-orphan"))
+    #
+    # # payment
+    # payment_id = Column(Integer,
+    #                     ForeignKey("payments.id"), nullable=False)
+    #
+    # payment = relationship("Payment", foreign_keys=[payment_id],
+    #                            backref=backref(
+    #                                "purchase",
+    #                                cascade="all, delete-orphan"))
+    #
 
     def __unicode__(self):
         return self.id
@@ -352,6 +362,6 @@ class PurchaseItems(db.Model):
     order_price = Column(Float, nullable=False)
     order_time_stamp = Column(DateTime, default=func.now())
 
-    # relationships
-    purchase = relationship('Purchase', back_populates='items')
-    product = relationship('Product', back_populates='purchases')
+    # # relationships
+    # purchase = relationship('Purchase', back_populates='items')
+    # product = relationship('Product', back_populates='purchases')
