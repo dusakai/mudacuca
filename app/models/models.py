@@ -97,12 +97,15 @@ class People (db.Model):
     # Fields
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
+    url_image = db.Column(db.String)
     email = db.Column(db.String, unique=True)
     cpf = db.Column(db.String, unique=True)
     phone =  Column(String, nullable=True)
     address = Column(String, nullable=True)
     people_join_date= Column(DateTime, default=func.now())
     slug = db.Column(db.String())
+    # category provisoria
+    category = db.Column(db.String())
     # # Associations
     # category_id = Column(Integer,
     #                     ForeignKey("category.id"), nullable=False)
@@ -112,11 +115,13 @@ class People (db.Model):
     #                                cascade="all, delete-orphan"))
 
 
-    def __init__(self, name, email, cpf, category):
+    def __init__(self, name, email, cpf, category, phone, address):
         self.name = name
         self.email = email
         self.cpf = cpf
         self.category = category
+        self.phone = phone
+        self.address = address
 
 
     def __unicode__(self):
@@ -136,8 +141,9 @@ class Customer (People):
                                backref=backref(
                                    "customers",
                                    cascade="all, delete-orphan"))
-    def __init__(self):
-        super().__init__()
+    def __init__(self, name, email, cpf, category, phone, address):
+        super().__init__(name, email, cpf, category, phone, address)
+
 
 class Seller (People):
     """ Seller's table """

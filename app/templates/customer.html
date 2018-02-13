@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <section class="main-section">
+                <ol class="breadcrumb">
+                  <li><a href="#"><h2>Clientes</h2></a></li>
+                  <li><a href="#">Novo Cliente</a></li>
+                 <!--<li class="active">Nova venda</li>-->
+                </ol>
+        </section>
+
+<!-- inicio adicionar customer -->
+
+    <section class="main-section paddingtop20" id="section_add_product">
+  		<div class="row">
+        <form class="form-horizonal" action='' method="POST">
+          {{ customer_form.csrf }}
+          <fieldset>
+            {{ customer_form.hidden_tag() }}
+
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="name">
+                {{ customer_form.name.label }}
+                <br>
+              </div>
+              <div class="col-md-6">
+                  {{ customer_form.name(class="form-control") }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="category">
+                {{ customer_form.category.label }}
+              </div>
+              <div class="col-md-6">
+                {{ customer_form.category(class="form-control") }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="image_name">
+                {{ customer_form.image_name.label}}
+              </div>
+              <div class="col-md-6">
+                {{ customer_form.image_name(button_map={class:"btn btn-primary btn-sm"}) }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="category">
+                {{ customer_form.email.label }}
+              </div>
+              <div class="col-md-6">
+                {{ customer_form.email(class="form-control") }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="description">
+                {{ customer_form.cpf.label }}
+              </div>
+              <div class="col-md-6">
+                {{ customer_form.cpf(class="form-control", rows="4") }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="quantity">
+                {{ customer_form.phone.label }}
+              </div>
+              <div class="col-md-6">
+                {{ customer_form.phone(class="form-control") }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="col-md-2 control-label" for="purchase_price">
+                {{ customer_form.address.label }}
+              </div>
+              <div class="col-md-6">
+                {{ customer_form.address(class="form-control") }}
+              </div>
+            </div>
+            <div class="col-md-12 form-group">
+              <label class="col-md-7" for="submit"></label>
+              <div class="col-md-4">
+                <div class="row paddingtop">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+              </div>
+            </div>
+
+        </fieldset>
+      </form>
+
+    </section>
+<!-- fim adicionar cusomer -->
+
+<section class="main-section paddingtop20" id="section_product_table">
+<div class="row">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>CPF</th>
+                    <th>Categoria</th>
+                    <th>Fone</th>
+                    <th>Endereço</th>
+              </tr>
+            </thead>
+            {% for name,email,cpf,category,phone,address in customer_person %}
+            <tbody>
+              <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ email }}</td>
+                    <td>{{ cpf }}</td>
+                    <td>{{ category }}</td>
+                    <td>{{ phone }}</td>
+                    <td>{{ address }}</td>
+            </tr>
+            </tbody>
+            {% endfor %}
+          </table>
+        </div>
+      </div>
+</section>
+
+
+
+{% endblock %}

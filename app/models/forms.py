@@ -11,7 +11,7 @@ class LoginForm (FlaskForm):
     remember_me = BooleanField("remember_me")
 
 
-class ProductAdd (FlaskForm):
+class ProductForm (FlaskForm):
     """
     Form for product add
     """
@@ -25,4 +25,18 @@ class ProductAdd (FlaskForm):
     image_name = FileField('Imagem')
     category = StringField('Categoria')
     stock = StringField('Estoque', validators=[DataRequired()])
+    submit = SubmitField('Inserir')
+
+class CustomerForm (FlaskForm):
+    """
+    Form for customer add
+    """
+
+    name = StringField('Nome', validators=[DataRequired("Ops... :(\nInsira o nome do cliente!")])
+    email = StringField('Email')
+    cpf = StringField('CPF')
+    phone = StringField('Fone')
+    address = TextField('Endereço', widget=TextArea())
+    image_name = FileField('Imagem')
+    category = StringField('Categoria')
     submit = SubmitField('Inserir')
